@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=pa$$w0rd
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    links:
+      - mysql:db
+    depends_on:
+      - mysql
+
+  laminas:
+    build: ./laminas
+    restart: unless-stopped
+    ports:
+      - 80:80
